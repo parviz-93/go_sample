@@ -32,9 +32,22 @@ pipeline {
         }
 
         stage('Test') {
+            when {
+                expression {
+                    return params.SKIP_TEST == true;
+                }
+            }
+        
             steps {
                 echo 'Hello World from test'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploy'
+            }
+        }
+
     }
 }
