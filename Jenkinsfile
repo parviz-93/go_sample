@@ -6,10 +6,21 @@ pipeline {
     }
 
     stages {
-        stage('Hello') {
+        stage('Build') {
+            
+            environment {
+                VERSION="AAA"
+            }
+            
+            agent {
+                 docker {
+                    image 'golang:1.16-alpine'
+                }
+            }
+
             steps {
                 echo 'Hello World'
-                sh 'echo 1'
+                sh 'echo ${VERSION}'
                 sh 'uname -a'
 
                 dir('~') {
@@ -18,6 +29,10 @@ pipeline {
                 }
                 sh 'pwd'
             }
+        }
+
+        stage('Test') {
+
         }
     }
 }
