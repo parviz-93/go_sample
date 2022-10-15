@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        A=B
+        A="B"
     }
 
     stages {
