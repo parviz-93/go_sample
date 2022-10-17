@@ -72,7 +72,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'github-parviz-token',
                                                 passwordVariable: 'githubPassword',
                                                 usernameVariable: 'githubUser')]) {
-                        sh('git tag -a ${TAG}')
+                        sh('git tag -a ${TAG} -m "tagged from jenkins"')
                         sh('git push https://${githubUser}:${githubPassword}@repo_url --tags')
                 }
             }
