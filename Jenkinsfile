@@ -40,7 +40,7 @@ pipeline {
 
         stage('Build image') {
             steps {
-              sh 'docker build -t rozikovp/go-sample:${params.TAG} .'
+              sh """docker build -t rozikovp/go-sample:${params.TAG} ."""
             }
         }
 
@@ -54,7 +54,7 @@ pipeline {
             steps{
                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push rozikovp/go-sample:${params.TAG}'
+                    sh """docker push rozikovp/go-sample:${params.TAG}"""
                 }
             }
         }
