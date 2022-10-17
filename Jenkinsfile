@@ -71,11 +71,11 @@ pipeline {
 
                 withCredentials([gitUsernamePassword(credentialsId: 'github-parviz-token',gitToolName: 'git-tool')]) {
                         // remove old tag
-                        sh('git push :refs/tags/${TAG}')
+                        sh('git push origin :refs/tags/${TAG}')
                         // update tag
                         sh('git tag -f ${TAG}')
                         // push
-                        sh('git push --tags')
+                        sh('git push origin --tags')
                 }
             }
 
