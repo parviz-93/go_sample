@@ -20,10 +20,6 @@ pipeline {
     stages {
         stage('Build') {
             
-            environment {
-                VERSION="AAA"
-            }
-            
             steps {
                 sh 'go mod download'
                 sh 'go build -v ./...'
@@ -44,7 +40,7 @@ pipeline {
 
         stage('Build image') {
             steps {
-              sh 'docker build -t rozikovp/go-sample:${param.TAG} .'
+              sh 'docker build -t rozikovp/go-sample:${params.TAG} .'
             }
         }
 
