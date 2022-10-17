@@ -1,18 +1,22 @@
 pipeline {
-    
+
     agent any
 
     triggers {
+        // cron for trigger pipiline
         cron('H */2 * * *')
+        // cron for polling github as we can not use github webhook
         pollSCM('H/5 * * * *')
     }
 
+    // decalre parameters
     parameters {
         string(name: 'TAG', defaultValue: "latest")
         booleanParam(name: 'SKIP_TEST', defaultValue: false)
         booleanParam(name: 'SKIP_PUBLISH_IMAGE', defaultValue: false)
     }
 
+    // setup tools
     tools {
         go 'go_1.16'
         git 'Default'
@@ -20,7 +24,7 @@ pipeline {
 
     stages {
         stage('Build') {
-                        steps {
+            steps {
                 sh 'go mod download'
                 sh 'go build -v ./...'
             }
