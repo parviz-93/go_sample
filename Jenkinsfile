@@ -1,8 +1,9 @@
 pipeline {
+    
     agent any
 
-    environment {
-        A="B"
+    tools {
+        go 'go_1.16'
     }
 
     stages {
@@ -12,22 +13,9 @@ pipeline {
                 VERSION="AAA"
             }
             
-            agent {
-                 docker {
-                    image 'golang:1.16-alpine'
-                }
-            }
-
             steps {
-                echo 'Hello World'
-                sh 'echo ${VERSION}'
-                sh 'uname -a'
-
-                dir('~') {
-                   sh 'pwd'
-                   sh 'ls'
-                }
-                sh 'pwd'
+                sh 'go mod download'
+                sh 'go build -v ./...'
             }
         }
 
@@ -39,13 +27,13 @@ pipeline {
             }
         
             steps {
-                echo 'Hello World from test'
+                sh 'go test -v ./...'
             }
         }
 
-        stage('Deploy') {
+        stage('Build image') {
             steps {
-                echo 'Deploy'
+               sh 'go test -v ./...'
             }
         }
 
