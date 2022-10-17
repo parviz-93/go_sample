@@ -15,6 +15,7 @@ pipeline {
 
     tools {
         go 'go_1.16'
+        git 'Default'
     }
 
     stages {
@@ -59,7 +60,20 @@ pipeline {
             }
         }
 
-        
+        stage("Push tag to git") {
+            sh("git config user.name 'Jenkins'")
+            sh("git config user.email 'jenkins@mycompany.com'")
+
+            withCredentials([usernamePassword(credentialsId: 'github-parviz-token',
+                                               passwordVariable: 'githubPassword',
+                                               usernameVariable: 'githubUser')]) {
+                    sh('git tag -a ${TAG}')
+                    sh('git push https://${githubUser}:${githubPassword}@repo_url --tags')
+                }
+
+        }
+
+
 
     }
 }
