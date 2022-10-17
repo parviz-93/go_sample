@@ -69,7 +69,7 @@ pipeline {
                 sh("git config user.name 'Jenkins'")
                 sh("git config user.email 'jenkins@mycompany.com'")
 
-                withCredentials([usernamePassword(credentialsId: 'github-parviz-token',gitToolName: 'git-tool')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'github-parviz-token',gitToolName: 'git-tool')]) {
                         sh('git tag ${TAG}')
                         sh('git push --tags')
                 }
