@@ -20,8 +20,7 @@ pipeline {
 
     stages {
         stage('Build') {
-            
-            steps {
+                        steps {
                 sh 'go mod download'
                 sh 'go build -v ./...'
             }
@@ -33,7 +32,6 @@ pipeline {
                     return params.SKIP_TEST == false;
                 }
             }
-        
             steps {
                 sh 'go test -v ./...'
             }
@@ -46,7 +44,7 @@ pipeline {
         }
 
         stage('Publish image') {
-             when {
+            when {
                 expression {
                     return params.SKIP_PUBLISH_IMAGE == false;
                 }
@@ -61,6 +59,12 @@ pipeline {
         }
 
         stage("Push tag to git") {
+            when {
+                expression {
+                    return params.SKIP_PUBLISH_IMAGE == false;
+                }
+            }
+
             sh("git config user.name 'Jenkins'")
             sh("git config user.email 'jenkins@mycompany.com'")
 
