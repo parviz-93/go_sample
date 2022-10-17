@@ -65,19 +65,18 @@ pipeline {
                 }
             }
 
-            sh("git config user.name 'Jenkins'")
-            sh("git config user.email 'jenkins@mycompany.com'")
+            steps {
+                sh("git config user.name 'Jenkins'")
+                sh("git config user.email 'jenkins@mycompany.com'")
 
-            withCredentials([usernamePassword(credentialsId: 'github-parviz-token',
-                                               passwordVariable: 'githubPassword',
-                                               usernameVariable: 'githubUser')]) {
-                    sh('git tag -a ${TAG}')
-                    sh('git push https://${githubUser}:${githubPassword}@repo_url --tags')
+                withCredentials([usernamePassword(credentialsId: 'github-parviz-token',
+                                                passwordVariable: 'githubPassword',
+                                                usernameVariable: 'githubUser')]) {
+                        sh('git tag -a ${TAG}')
+                        sh('git push https://${githubUser}:${githubPassword}@repo_url --tags')
                 }
+            }
 
         }
-
-
-
     }
 }
